@@ -4,21 +4,16 @@ import { createContext, useContext, useState} from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const savedUser = sessionStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const [user, setUser] = useState(null);
 
   const login = (email) => {
     const role = email === "admin@example.com" ? "admin" : "user";
     const userData = { email, role };
     setUser(userData);
-    sessionStorage.setItem("user", JSON.stringify(userData)); // Persist during session
   };
 
   const logout = () => {
     setUser(null);
-    sessionStorage.removeItem("user"); // Clear on logout
   };
 
   return (
